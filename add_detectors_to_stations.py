@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-import pprint
 import os
 
 MONGO_HOST = os.getenv('MONGO_IP')
