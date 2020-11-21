@@ -1,0 +1,64 @@
+body       {font-family: "Helvetica", sans-serif;
+    font-size: 16px}
+h1     {color: #FED9B7;
+    text-align: center;
+    float: left;
+    padding: 5px 5px;}
+h2     { color: #0081A7;
+    text-align: center}
+a          {color: #F07167}
+p          {color: darkslategrey;}
+form       { margin:.1em auto;
+    padding:.1em;
+    width: 900px}
+.story {
+    color: #F07167;
+    font-weight: bold;
+    font-size:20px}
+
+.preview   {.margin:.1em auto;
+    padding:.1em;
+    width: 900px}
+.heading    { font-weight:
+        bold;
+    outline: none;
+    color: #00AFB9;
+    font-size:20px}
+.subheading    { font-weight: bold;
+    outline: none;
+    color: darkslategrey;
+    font-size:18px}
+.page      { margin:auto; width: 1000px; }
+.navbar    {background-color: #0081A7;
+    text-align: center;
+    padding: 5px;
+    height: 90px}
+.navbar a  {float: right;
+    color:#FDFCDC;
+    font-weight:bold;
+    text-align:center;
+    padding: 5px 5px;
+    font-size:20px}
+.readonly {
+   font-size: 20px;
+    color: darkslategrey;
+    height: 50px;
+    width: 600px;
+    wrap: hard;
+    border: 0px none;
+    outline: none
+    }
+input[type=text] {  padding: .5em;
+    font-weight: bold;
+    font-size: 20px;
+    color: darkslategrey;
+    width: 600px;
+    border: 0px none;
+    outline: none}
+textarea {
+    font-size: 14px;
+    color: darkslategrey;
+    height: 100px;
+    width: 800px;
+    wrap: hard
+    }

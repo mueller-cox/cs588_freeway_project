@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+  <h3>Results of Station Milemarker Update</h3>
+  {% for key, value in results.items() %}
+  <p>Station: {{key}} </p>
+  <p>Before: {{value[0]}}</p>
+  <p>After: {{value[1]}}</p>
+  {% end for %}
+
+
+{% endblock %}
