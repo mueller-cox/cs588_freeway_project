@@ -10,5 +10,7 @@ class Routes(MethodView):
         """
 
         model = models.get_model()
-        results = model.find_route(request.form['station_start'], request.form['station_end'])
-        return render_template('routes.html', results=results)
+        start = request.form['station_start']
+        end = request.form['station_end']
+        results = model.find_route(start, end)
+        return render_template('routes.html', results=results, start=start, end=end)

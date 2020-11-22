@@ -59,15 +59,17 @@ class model(Model):
         path = []
 
         if(starting['milepost'] == ending['milepost']):
-            path.append(starting)
+            path.append({starting['locationtext']:starting['milepost']})
         else if (starting['milepost'] > ending['milepost']):
-            path.append(starting)
+            path.append({starting['locationtext']:starting['milepost']})
             while(path[i]['_id'] != ending['_id'] && path[i]['downstream'] != 0):
-                path[i+1] = dict(filter(lambda station: station['_id'] == path[i]['downstream'])
+                next_stop = dict(filter(lambda station: station['_id'] == path[i]['downstream'])
+                path.append(next_stop['location_text']:next_stop['milepost'])
                 i += 1
         else:
             while(path[i]['_id'] != ending['_id'] && path[i]['upstream'] != 0):
-                path[i+1] = dict(filter(lambda station: station['_id'] == path[i]['upstream'])
+                next_stop = dict(filter(lambda station: station['_id'] == path[i]['upstream'])
+                path.append(next_stop['location_text']:next_stop['milepost'])
                 i += 1
 
         return path
