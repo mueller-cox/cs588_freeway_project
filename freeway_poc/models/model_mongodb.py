@@ -6,6 +6,8 @@ from .Model import Model
 from pymongo import MongoClient
 import time
 import os
+from bson.json_util import loads, dumps
+import json
 
 MONGO_HOST = os.getenv('MONGO_IP')
 MONGO_DB = "freeway"
@@ -61,16 +63,19 @@ class model(Model):
         connection = MongoClient(MONGO_HOST, 27017)
         db = connection[MONGO_DB]
         params = {'station_name': station_name, 'milemarker': milemarker}
+        results = {}
 
         stations = db['stations']
         #get previous version
-        station_before = stations.find({'locationtext': params['station_name']}, projection={_id:0, 'locationtext':1,'milepost':1})
+        results1 = json.loads(dumps(stations.find({'locationtext': params['station_name']}, projection={'_id':0, 'locationtext':1,'milepost':1})))
+        station_before = results1[0]['milepost']
         #update station
         stations.update_one({'locationtext': params['station_name']},{'$set': {'milepost': params['milemarker']}})
         #get new version
-        station_after = stations.find({'locationtext': params['station_name']}, projection={_id:0, 'locationtext':1,'milepost':1})
+        results2 = json.loads(dumps(stations.find({'locationtext': params['station_name']}, projection={'_id':0, 'locationtext':1,'milepost':1})))
+        station_after = results2[0]['milepost']
 
-        results['locationtext'] = [station_before, station_after]
+        results[params['station_name']] = [station_before, station_after]
 
         return results
 

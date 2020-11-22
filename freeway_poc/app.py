@@ -4,9 +4,10 @@
 
 import flask
 from index import Index
-from insert import Add
-from remove import Delete
-from view_all import AllEntries
+from volume import Volume
+from routes import Routes
+from update_station import UpdateStation
+from speeds import Speeds
 
 app = flask.Flask(__name__)
 
@@ -27,7 +28,7 @@ app.add_url_rule('/update_station/',
                  methods=['POST'])
 
 app.add_url_rule('/speeds/',
-                 view_func=Delete.as_view('speeds'),
+                 view_func=Speeds.as_view('speeds'),
                  methods=['POST'])
 
 if __name__ == '__main__':

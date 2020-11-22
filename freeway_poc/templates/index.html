@@ -6,7 +6,7 @@
 </div>
     <h2>Update Station Milepost</h2>
      <form action="{{url_for('update_station')}}" method=post>
-        <select name=station_list1 required>
+        <select name=station_name required>
         <option value='Sunnyside NB'>Sunnyside NB</option>
         <option value='Johnson Cr NB'>Johnson Cr NB</option>
         <option value='Foster NB'>Foster NB</option>
@@ -21,10 +21,11 @@
         <option value='Powell to I-205 NB'>Powell to I-205 NB</option>
         <option value='Sunnyside SB'>Sunnyside SB</option>
         <option value='Columbia to I-205 NB'>Columbia to I-205 NB</option>
+	<option value='Columbia to I-205 SB'>Columbia to I-205 SB</option>
         <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
         <option value='Glisan to I-205 SB'>Glisan to I-205 SB</option>
         </select>
-        <input type="number" step="0.01" name=milepost required>
+        <input type="number" step="0.01" name=milemarker required>
         <input type="submit" name="updatestation" value="update">
      </form>
      

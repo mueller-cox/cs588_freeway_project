@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 from flask.views import MethodView
 import models
 
@@ -12,4 +12,4 @@ class UpdateStation(MethodView):
 
         model = models.get_model()
         results = model.update_station(request.form['station_name'], request.form['milemarker'])
-        return redirect(url_for('update_station'), results=results)
+        return render_template('update_station.html', results=results)
