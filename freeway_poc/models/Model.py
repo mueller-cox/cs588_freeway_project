@@ -44,10 +44,9 @@ class Model:
         """
         pass
 
-    def get_station_names(self):
+    def get_stations(self):
         """
         Returns a list of dictionaries, NB and SB with sation names for each
         """
 
         pass
-        

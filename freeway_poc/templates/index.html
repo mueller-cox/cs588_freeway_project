@@ -21,13 +21,62 @@
         <option value='Powell to I-205 NB'>Powell to I-205 NB</option>
         <option value='Sunnyside SB'>Sunnyside SB</option>
         <option value='Columbia to I-205 NB'>Columbia to I-205 NB</option>
-	<option value='Columbia to I-205 SB'>Columbia to I-205 SB</option>
+	      <option value='Columbia to I-205 SB'>Columbia to I-205 SB</option>
         <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
         <option value='Glisan to I-205 SB'>Glisan to I-205 SB</option>
         </select>
         <input type="number" step="0.01" name=milemarker required>
         <input type="submit" name="updatestation" value="update">
      </form>
-     
+     <h2>Path Finding I-205 NB</h2>
+     <form action="{{url_for('find_route')}}" method=post>
+        <select name=station_start required>
+        <option value='Sunnyside NB'>Sunnyside NB</option>
+        <option value='Johnson Cr NB'>Johnson Cr NB</option>
+        <option value='Foster NB'>Foster NB</option>
+        <option value='Division NB'>Division NB</option>
+        <option value='Powell to I-205 NB'>Powell to I-205 NB</option>
+        <option value='Columbia to I-205 NB'>Columbia to I-205 NB</option>
+        <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
+        </select>
+        <select name=n_station_end required>
+        <option value='Sunnyside NB'>Sunnyside NB</option>
+        <option value='Johnson Cr NB'>Johnson Cr NB</option>
+        <option value='Foster NB'>Foster NB</option>
+        <option value='Division NB'>Division NB</option>
+        <option value='Powell to I-205 NB'>Powell to I-205 NB</option>
+        <option value='Columbia to I-205 NB'>Columbia to I-205 NB</option>
+        <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
+        </select>
+        <input type="submit" name="find_path_s" value="findpath">
+     </form>
+     <h2>Path Finding I-205 SB</h2>
+     <form action="{{url_for('find_route')}}" method=post>
+       <select name=station_start required>
+       <option value='Airportway WB to SB'>Airportway WB to SB</option>
+       <option value='Airportway EB to SB'>Airportway EB to SB</option>
+       <option value='Stark/Washington SB'>Stark/Washington SB</option>
+       <option value='Division SB'>Division SB</option>
+       <option value='Powell Blvd SB'>Powell Blvd SB</option>
+       <option value='Foster SB'>Foster SB</option>
+       <option value='Johnson Creek SB'>Johnson Creek SB</option>
+       <option value='Sunnyside SB'>Sunnyside SB</option>
+       <option value='Columbia to I-205 SB'>Columbia to I-205 SB</option>
+       <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
+       </select>
+       <select name=station_end required>
+       <option value='Airportway WB to SB'>Airportway WB to SB</option>
+       <option value='Airportway EB to SB'>Airportway EB to SB</option>
+       <option value='Stark/Washington SB'>Stark/Washington SB</option>
+       <option value='Division SB'>Division SB</option>
+       <option value='Powell Blvd SB'>Powell Blvd SB</option>
+       <option value='Foster SB'>Foster SB</option>
+       <option value='Johnson Creek SB'>Johnson Creek SB</option>
+       <option value='Sunnyside SB'>Sunnyside SB</option>
+       <option value='Columbia to I-205 SB'>Columbia to I-205 SB</option>
+       <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
+       </select>
+       <input type="submit" name="find_path_n" value="update">
+     </form>
 
 {% endblock %}
