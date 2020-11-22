@@ -44,7 +44,7 @@ class model(Model):
         """
         pass
 
-    def find_route(self, station_start, station_end):
+    def find_route(self, direction, station_start, station_end):
         """
         Returns list of all stations, and their mileposts from start to end
         :param start_station: string
@@ -52,24 +52,36 @@ class model(Model):
         :return: list of dictionaries each entry is locationtext: milepost
         """
         stations = self.get_stations()
-
-        starting = dict(filter(lambda station: station['locationtext'] == params['station_start'], stations))
-        ending = dict(filter(lambda station: station['locationtext'] == params['station_end'], stations))
+        params = {'station_start': station_start, 'station_end': station_end}
+        starting_list = list(filter(lambda station: station['locationtext'] == params['station_start'], stations))
+        ending_list = list(filter(lambda station: station['locationtext'] == params['station_end'], stations))
+        starting = starting_list[0]
+        ending = ending_list[0]
         i = 0
         path = []
 
+        stream_dir = 0
+
+        if(direction == 'south'):
+            stream_dir = float(ending['milepost']) - float(starting['milepost'])
+
+        else:
+            stream_dir = float(starting['milepost']) - float(ending['milepost'])
+
+        #set starting point as first point on path
+        path.append(starting)
+
         if(starting['milepost'] == ending['milepost']):
-            path.append({starting['locationtext']:starting['milepost']})
-        else if (starting['milepost'] > ending['milepost']):
-            path.append({starting['locationtext']:starting['milepost']})
-            while(path[i]['_id'] != ending['_id'] && path[i]['downstream'] != 0):
-                next_stop = dict(filter(lambda station: station['_id'] == path[i]['downstream'])
-                path.append(next_stop['location_text']:next_stop['milepost'])
+            return path
+        elif (stream_dir > 0.0):
+            while((path[i]['_id'] != ending['_id']) and path[i]['upstream'] != 0):
+                next_stop = list(filter(lambda station: station['_id'] == path[i]['upstream'], stations))
+                path.append(next_stop[0])
                 i += 1
         else:
-            while(path[i]['_id'] != ending['_id'] && path[i]['upstream'] != 0):
-                next_stop = dict(filter(lambda station: station['_id'] == path[i]['upstream'])
-                path.append(next_stop['location_text']:next_stop['milepost'])
+            while((path[i]['_id'] != ending['_id']) and path[i]['downstream'] != 0):
+                next_stop = list(filter(lambda station: station['_id'] == path[i]['downstream'], stations))
+                path.append(next_stop[0])
                 i += 1
 
         return path
@@ -106,11 +118,10 @@ class model(Model):
         """
         connection = MongoClient(MONGO_HOST, 27017)
         db = connection[MONGO_DB]
-        params = {'station_start': station_start, 'station_end': station_end}
         path = []
 
         collection = db['stations']
         #get stations
-        stations = json.loads(dumps(stations.find({}, projection={'locationtext':1,'milepost':1, 'upstream':1, 'downstream':1})))
+        results = json.loads(dumps(collection.find({}, projection={'locationtext':1,'milepost':1, 'upstream':1, 'downstream':1})))
 
-        return stations
+        return results

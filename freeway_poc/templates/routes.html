@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-<h3>Path From: {% start %} To: {% end %}</h3>
-{% for key, value in results.items() %}
+<h3>Path From: {{start}} To: {{end}}</h3>
+{% for result in results %}
+{% for key, value in result.items() %}
 <p>Station: {{key}} Milepost: {{value}}</p>
+{% endfor %}
 {% endfor %}
 {% endblock %}

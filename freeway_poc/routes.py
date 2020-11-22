@@ -1,5 +1,6 @@
-from flask import render_template
+from flask import render_template, request
 from flask.views import MethodView
+import models
 
 
 class Routes(MethodView):
@@ -12,5 +13,13 @@ class Routes(MethodView):
         model = models.get_model()
         start = request.form['station_start']
         end = request.form['station_end']
-        results = model.find_route(start, end)
+        results = []
+        direction = request.form['direction']
+        list_results = model.find_route(direction,start, end)
+      
+
+        for result in list_results:
+            results.append({result['locationtext']:result['milepost']})
+
+
         return render_template('routes.html', results=results, start=start, end=end)
