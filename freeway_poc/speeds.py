@@ -8,4 +8,4 @@ class Speeds(MethodView):
         """
 
         """
-        pass
+        model = models.get_model()

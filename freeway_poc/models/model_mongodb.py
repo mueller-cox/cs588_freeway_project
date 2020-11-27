@@ -8,6 +8,7 @@ import time
 import os
 from bson.json_util import loads, dumps
 import json
+import datetime
 
 MONGO_HOST = os.getenv('MONGO_IP')
 MONGO_DB = "freeway"
@@ -31,7 +32,11 @@ class model(Model):
         :param high: int
         :return: dictionary
         """
-        pass
+        connection = MongoClient(MONGO_HOST, 27017)
+        db = connection[MONGO_DB]
+        loop_data = db['loop_data']
+
+        return json.loads(dumps(loop_data.find({'speed': { $exists: true, $lte: high, $gte: low }, }))).count()
 
     def volume_by_station(self, station_name, year, day, month):
         """
@@ -42,7 +47,29 @@ class model(Model):
         :param month: int
         :return: int
         """
-        pass
+        connection = MongoClient(MONGO_HOST, 27017)
+        db = connection[MONGO_DB]
+        stationParams = {'station_name': station_name}
+
+        if (len(str(year)) != 4 || len(str(day)) != 2 || len(str(month)) != 2):
+            raise Exception("Year, month, or day not in correct format.")
+
+        startOfDay = datetime.datetime(year, month, day)
+        endOfDay = datetime.datetime(year, month, day, 11, 59, 59)
+
+        stations = db['stations']
+        loop_data = db['loop_data']
+        volume = 0
+
+        station = json.loads(dumps(stations.find({'locationtext': params['station_name']}, projection={'_id':0, 'locationtext':1, 'milepost':1})))
+        stationID = station[0]['_id']
+
+        stationData = json.loads(dumps(loop_data.find({'stationid': stationID, 'starttime': {$gte: startOfDay, $lte; endOfDay}, projection={'_id':0, 'volume':1}})))
+
+        for item in stationData:
+            volume += item['volume']
+
+        return volume
 
     def find_route(self, direction, station_start, station_end):
         """

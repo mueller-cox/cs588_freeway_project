@@ -8,4 +8,4 @@ class Volume(MethodView):
         """
         
         """
-        pass
+        model = models.get_model()
