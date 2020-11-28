@@ -36,11 +36,9 @@ class model(Model):
         db = connection[MONGO_DB]
         loop_data = db['loop_data']
 
-        results = json.loads(dumps(loop_data.find({'speed': { '$lte': high, '$gte': low } })))
-        print(results)
-        results_count = results.count()
-        print(results_count)
-        return results_count
+        results = loop_data.find({'speed': { '$gte': int(low), '$lte': int(high) } }).count()
+
+        return results
 
     def volume_by_station(self, station_name, year, day, month):
         """
@@ -58,6 +56,9 @@ class model(Model):
         if (len(str(year)) != 4 or len(str(day)) != 2 or len(str(month)) != 2):
             raise Exception("Year, month, or day not in correct format.")
 
+        year = int(year)
+        month = int(month)
+        day = int(day)
         startOfDay = datetime.datetime(year, month, day)
         endOfDay = datetime.datetime(year, month, day, 11, 59, 59)
 
@@ -65,14 +66,30 @@ class model(Model):
         loop_data = db['loop_data']
         volume = 0
 
-        station = json.loads(dumps(stations.find({'locationtext': params['station_name']}, projection={'_id':0, 'locationtext':1, 'milepost':1})))
+        station = json.loads(dumps(stations.find({'locationtext': stationParams['station_name']}, projection={'_id':1, 'locationtext':1, 'milepost':1})))
         stationID = station[0]['_id']
 
-        stationData = loop_data.find({'stationid': stationID, 'starttime': {'$gte': startOfDay, '$lte': endOfDay}}, projection={'_id':0, 'volume':1})
+        # stationData = loop_data.aggregate([{ '$match': {
+        #     'stationid': stationID, 
+        #     'starttime': {'$gte': startOfDay, '$lte': endOfDay}}, 
+        # },
+        # { '$group': { '_id': 'stationid', sum : {'$sum': '$volume' }}}])
 
-        volume_sum = stationData.sum()
+        #volume_sum = stationData.sum()
 
-        return volume_sum
+        # print(stationData)
+        # print(stationData.sum)
+
+        stationData = loop_data.find({
+            'stationid': stationID, 
+            'starttime': {'$gte': startOfDay, '$lte': endOfDay} 
+        })
+
+        count = 0
+        for item in stationData:
+            count = count + 1
+        print(count)
+        return count
 
     def find_route(self, direction, station_start, station_end):
         """
