@@ -77,7 +77,6 @@ class model(Model):
         count = 0
         for item in stationData:
             count = count + 1
-        print(count)
         return count
 
     def find_route(self, direction, station_start, station_end):
