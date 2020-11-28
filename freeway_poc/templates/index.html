@@ -1,5 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
+    <h2>Find Speed Instances</h2>
+    <form action="{{url_for('speeds')}}" method=post>
+      <input type="number" name="low" required>
+      <input type="number" name="high" required>
+      <input type="submit" name="countspeeds" value="find">
+    </form>
+    <h2>Find Volumes for Station</h2>
+    <form action="{{url_for('volume')}}" method=post>
+      <select name=station_name required>
+      <option value='Sunnyside NB'>Sunnyside NB</option>
+      <option value='Johnson Cr NB'>Johnson Cr NB</option>
+      <option value='Foster NB'>Foster NB</option>
+      <option value='Division NB'>Division NB</option>
+      <option value='Airportway WB to SB'>Airportway WB to SB</option>
+      <option value='Airportway EB to SB'>Airportway EB to SB</option>
+      <option value='Stark/Washington SB'>Stark/Washington SB</option>
+      <option value='Division SB'>Division SB</option>
+      <option value='Powell Blvd SB'>Powell Blvd SB</option>
+      <option value='Foster SB'>Foster SB</option>
+      <option value='Johnson Creek SB'>Johnson Creek SB</option>
+      <option value='Powell to I-205 NB'>Powell to I-205 NB</option>
+      <option value='Sunnyside SB'>Sunnyside SB</option>
+      <option value='Columbia to I-205 NB'>Columbia to I-205 NB</option>
+      <option value='Columbia to I-205 SB'>Columbia to I-205 SB</option>
+      <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
+      <option value='Glisan to I-205 SB'>Glisan to I-205 SB</option>
+      </select>
+      <input type="number" name="year" required>
+      <input type="number" name="month" required>
+      <input type="number" name="day" required>
+      <input type="submit" name="volume" value="count">
+    </form>
     <h2>Update Station Milepost</h2>
      <form action="{{url_for('update_station')}}" method=post>
         <select name=station_name required>
@@ -74,7 +106,7 @@
        <option value='Glisan to I-205 SB'>Glisan to I-205 SB</option>
        </select>
        <input type="hidden" name="direction" value="south"/>
-       <input type="submit" name="find_path_n" value="update">
+       <input type="submit" name="find_path_n" value="findpath">
      </form>
 
 {% endblock %}
