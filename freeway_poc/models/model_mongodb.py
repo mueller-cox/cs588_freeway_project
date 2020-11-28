@@ -69,17 +69,6 @@ class model(Model):
         station = json.loads(dumps(stations.find({'locationtext': stationParams['station_name']}, projection={'_id':1, 'locationtext':1, 'milepost':1})))
         stationID = station[0]['_id']
 
-        # stationData = loop_data.aggregate([{ '$match': {
-        #     'stationid': stationID, 
-        #     'starttime': {'$gte': startOfDay, '$lte': endOfDay}}, 
-        # },
-        # { '$group': { '_id': 'stationid', sum : {'$sum': '$volume' }}}])
-
-        #volume_sum = stationData.sum()
-
-        # print(stationData)
-        # print(stationData.sum)
-
         stationData = loop_data.find({
             'stationid': stationID, 
             'starttime': {'$gte': startOfDay, '$lte': endOfDay} 
