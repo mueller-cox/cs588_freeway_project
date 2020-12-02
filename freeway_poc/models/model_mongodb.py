@@ -10,7 +10,7 @@ import json
 import datetime
 
 MONGO_HOST = os.getenv('MONGO_IP')
-MONGO_DB = "freeway"
+MONGO_DB = "Freeway"
 connection = MongoClient(MONGO_HOST, 27017)
 db = connection[MONGO_DB]
 
