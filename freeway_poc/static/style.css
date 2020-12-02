@@ -32,15 +32,6 @@ form       { margin:.1em auto;
     text-align:center;
     padding: 5px 5px;
     font-size:20px}
-.readonly {
-   font-size: 20px;
-    color: #577590;
-    height: 50px;
-    width: 600px;
-    wrap: hard;
-    border: 0px none;
-    outline: none
-    }
 input[type=text] {  padding: .5em;
     font-weight: bold;
     font-size: 20px;
@@ -48,10 +39,3 @@ input[type=text] {  padding: .5em;
     width: 600px;
     border: 0px none;
     outline: none}
-textarea {
-    font-size: 14px;
-    color: 577590;
-    height: 100px;
-    width: 800px;
-    wrap: hard
-    }

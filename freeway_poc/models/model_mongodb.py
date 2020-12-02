@@ -2,7 +2,6 @@
    Models to be used for mongodb database integration
    Initializes db if not created and outlines functions supported for accessing database records in the model
 """
-from .Model import Model
 from pymongo import MongoClient
 import time
 import os
