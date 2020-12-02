@@ -15,7 +15,7 @@ connection = MongoClient(MONGO_HOST, 27017)
 db = connection[MONGO_DB]
 
 
-class model(Model):
+class model():
     def __init__(self):
         """
           connect to database, if database and/or table doesn't doesn't exist create it
