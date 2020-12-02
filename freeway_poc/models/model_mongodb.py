@@ -69,15 +69,33 @@ class model(Model):
         station = json.loads(dumps(stations.find({'locationtext': stationParams['station_name']}, projection={'_id':1, 'locationtext':1, 'milepost':1})))
         stationID = station[0]['_id']
 
+        # newStationData = loop_data.aggregate([
+        #     {
+        #         '$match':
+        #         {
+        #             'volume': {'$ne': NaN},
+        #             'stationid': stationID, 
+        #             'starttime':
+        #             {
+        #                 '$gte': startOfDay,
+        #                 '$lte': endOfDay
+        #             }
+        #         }
+        #     },
+        #     {
+        #         '$group': { _id: '$stationid', totalAmount: {'$sum': '$volume'}}
+        #     }
+        # ])
+
         stationData = loop_data.find({
             'stationid': stationID, 
             'starttime': {'$gte': startOfDay, '$lte': endOfDay} 
         })
 
-        count = 0
         for item in stationData:
-            count = count + 1
-        return count
+            if (isinstance(item['volume'], int)):
+                volume = volume + int(item['volume'])
+        return volume
 
     def find_route(self, direction, station_start, station_end):
         """
