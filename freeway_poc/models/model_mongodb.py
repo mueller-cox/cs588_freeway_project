@@ -10,7 +10,7 @@ import json
 import datetime
 
 MONGO_HOST = os.getenv('MONGO_IP')
-MONGO_DB = "Freeway"
+MONGO_DB = "freeway"
 connection = MongoClient(MONGO_HOST, 27017)
 db = connection[MONGO_DB]
 
@@ -35,7 +35,14 @@ class model():
         db = connection[MONGO_DB]
         loop_data = db['loop_data']
 
-        results = loop_data.find({'speed': { '$gte': int(high), '$lte': int(low) } }).count()
+        results = loop_data.find(
+            {
+                '$or': [
+                    {'speed': { '$gte': int(high)} },
+                    {'speed': { '$lte': int(low)}}
+                ]
+            }
+        ).count()
 
         return results
 
