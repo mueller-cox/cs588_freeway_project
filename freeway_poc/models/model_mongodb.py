@@ -36,7 +36,7 @@ class model(Model):
         db = connection[MONGO_DB]
         loop_data = db['loop_data']
 
-        results = loop_data.find({'speed': { '$gte': int(low), '$lte': int(high) } }).count()
+        results = loop_data.find({'speed': { '$gte': int(high), '$lte': int(low) } }).count()
 
         return results
 
