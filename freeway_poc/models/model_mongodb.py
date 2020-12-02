@@ -7,9 +7,10 @@ import time
 import os
 from bson.json_util import loads, dumps
 import json
+import datetime
 
 MONGO_HOST = os.getenv('MONGO_IP')
-MONGO_DB = "freeway"
+MONGO_DB = "Freeway"
 connection = MongoClient(MONGO_HOST, 27017)
 db = connection[MONGO_DB]
 
@@ -30,7 +31,13 @@ class model(Model):
         :param high: int
         :return: dictionary
         """
-        pass
+        connection = MongoClient(MONGO_HOST, 27017)
+        db = connection[MONGO_DB]
+        loop_data = db['loop_data']
+
+        results = loop_data.find({'speed': { '$gte': int(high), '$lte': int(low) } }).count()
+
+        return results
 
     def volume_by_station(self, station_name, year, day, month):
         """
@@ -41,7 +48,50 @@ class model(Model):
         :param month: int
         :return: int
         """
-        pass
+        connection = MongoClient(MONGO_HOST, 27017)
+        db = connection[MONGO_DB]
+        stationParams = {'station_name': station_name}
+
+        if (len(str(year)) != 4 or len(str(day)) != 2 or len(str(month)) != 2):
+            raise Exception("Year, month, or day not in correct format.")
+
+        year = int(year)
+        month = int(month)
+        day = int(day)
+        startOfDay = datetime.datetime(year, month, day)
+        endOfDay = datetime.datetime(year, month, day, 11, 59, 59)
+
+        stations = db['stations']
+        loop_data = db['loop_data']
+        volume = 0
+
+        station = json.loads(dumps(
+            stations.find({'locationtext': stationParams['station_name']}, 
+                projection={'_id':1, 'locationtext':1, 'milepost':1})))
+        stationID = station[0]['_id']
+
+        newStationData = loop_data.aggregate([
+            {
+                '$match':
+                {
+                    'stationid': stationID, 
+                    'starttime':
+                    {
+                        '$gte': startOfDay,
+                        '$lte': endOfDay
+                    }
+                }
+            },
+            {
+                '$group': { '_id': '$stationid', 'totalAmount': {'$sum': '$volume'}}
+            }
+        ])
+
+        for item in newStationData:
+            if (item['_id'] == stationID):
+                return item['totalAmount']
+            else:
+                return -1
 
     def find_route(self, direction, station_start, station_end):
         """
