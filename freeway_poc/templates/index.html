@@ -2,7 +2,9 @@
 {% block content %}
     <h2>Find Speed Instances</h2>
     <form action="{{url_for('speeds')}}" method=post>
+      <label for="low">Low speed</label>
       <input type="number" name="low" required>
+      <label for="high">High speed</label>
       <input type="number" name="high" required>
       <input type="submit" name="countspeeds" value="find">
     </form>
@@ -27,8 +29,11 @@
       <option value='Glisan to I-205 NB'>Glisan to I-205 NB</option>
       <option value='Glisan to I-205 SB'>Glisan to I-205 SB</option>
       </select>
+      <label for="year">Year</label>
       <input type="number" name="year" required>
+      <label for="year">Month</label>
       <input type="number" name="month" required>
+      <label for="year">Day</label>
       <input type="number" name="day" required>
       <input type="submit" name="volume" value="count">
     </form>
